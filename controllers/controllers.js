@@ -1,10 +1,10 @@
 import {getSingleUserController} from "./getUserController.js"
 import {createOneController} from "./createUserController.js"
-import { updateSingleUserController  } from "./updateUserController.js"
+import { loginController } from "./loginUserController.js"
 
 export  {
     getSingleUserController,
     createOneController,
-    updateSingleUserController,
+    loginController,
     
 }

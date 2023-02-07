@@ -4,7 +4,6 @@ import { MongoClient, ServerApiVersion } from 'mongodb';
 config();
 
 const mongo_uri = process.env.DATABASE_URI
-console.log(process.env.DATABASE_URI);
 const client = new MongoClient(mongo_uri,{ useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 })
 // const users= client.db("twitter_bots").collection("users")
 
@@ -22,12 +21,11 @@ finally{
 
 export async function getOneUser(username){
     try{
-        const result = await client.db("twitter_bots").collection("users").findOne({"username":username})
-        console.log("found")
-        return result;
+        const result = await client.db("twitter_bots").collection("users").findOne(username) 
+        return result
     }
     catch(e){
-        console.error("User does not exist ");
+        console.error(e);
     }
 
 }
@@ -43,10 +41,12 @@ export async function createOneUser(username,password){
     }
 }
 
-export async function updateOneUser(id,username,password){
+export async function updateOneUser(username,dataToBeUpdated){
     try{
-        let user = await client.db("twitter_bots").collection("users").findOne(id)
-        const result = await user.updateOne(username,password);
+        let result = await client.db("twitter_bots").collection("users").updateOne(
+            {username:username},
+            {$set:dataToBeUpdated}
+        )
         console.log("updated")
         return result;
     }

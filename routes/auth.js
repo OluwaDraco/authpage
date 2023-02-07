@@ -1,14 +1,15 @@
 import { Router } from "express";
-import bcrypt from "bcryptjs"
-import {getSingleUserController,createOneController,updateSingleUserController} from "../controllers/controllers.js"
+import {getSingleUserController,createOneController,loginController} from "../controllers/controllers.js"
+import {verifyJWT} from "../middleware/jwts.js"
 
 const authRouter = Router();
 
-authRouter.get("/",getSingleUserController);
+authRouter.get("/getUsers",verifyJWT,getSingleUserController);
 
 authRouter.post("/signup",createOneController);
 
-authRouter.put("/update-info",updateSingleUserController);
+authRouter.post("/login",loginController);
+
 
 
 
